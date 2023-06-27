@@ -24,7 +24,7 @@ const Form: FunctionComponent<FormProps> = ({ setOutput }) => {
         if (response.ok) {
             const data = await response.text()
 
-            const ticketParser = await fetch('http://localhost:5000/api/v1/tickets/disco', {
+            const ticketParser = await fetch('https://ticketscanner.onrender.com/api/v1/tickets/disco', {
                 method: 'POST',
                 body: JSON.stringify({ ticketData: data }),
                 headers: {

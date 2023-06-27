@@ -48,7 +48,7 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => 
 
             {cameraIsOpen && (
                 <QrReader
-                    constraints={{ facingMode: 'user' }}
+                    constraints={{ facingMode: 'enviroment' }}
                     onResult={(result) => {
                         if (!!result) {
                             // @ts-ignore
