@@ -23,7 +23,7 @@ const Form: FunctionComponent<FormProps> = ({ setOutput }) => {
         // }
 
 
-        const json = JSON.stringify(Object.fromEntries(formData));
+        // const json = JSON.stringify(Object.fromEntries(formData));
 
         const { url } = Object.fromEntries(formData)
 

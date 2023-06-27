@@ -51,6 +51,7 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => 
                     constraints={{ facingMode: 'user' }}
                     onResult={(result) => {
                         if (!!result) {
+                            // @ts-ignore
                             handleScan(result?.text);
                         }
                     }}
