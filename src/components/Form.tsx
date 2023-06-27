@@ -12,35 +12,33 @@ const Form: FunctionComponent<FormProps> = ({ setOutput }) => {
 
         const formData = new FormData(event.currentTarget);
 
-        // const { url } = Object.fromEntries(formData);
-
-        // const data = await parser(url as string)
-
-        // console.log(data)
-
-        // if (data) {
-        //     setOutput(data as unknown as SetStateAction<{ data: IData; } | null>)
-        // }
-
-
-        // const json = JSON.stringify(Object.fromEntries(formData));
-
         const { url } = Object.fromEntries(formData)
 
         const response = await fetch((url as string), {
             method: 'GET',
-            // body: json,
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'text/html',
             },
         });
 
         if (response.ok) {
-            // const data = await response.json();
             const data = await response.text()
-            console.log(data)
-            // setOutput(data)
-            
+
+            const ticketParser = await fetch('http://localhost:5000/api/v1/tickets/disco', {
+                method: 'POST',
+                body: JSON.stringify({ ticketData: data }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (ticketParser.ok) {
+                const data = await ticketParser.json()
+                setOutput(data)
+            } else {
+                console.error(ticketParser.status)
+            }
+
         } else {
             console.error('Form submission failed:', response.status);
         }
