@@ -2,10 +2,12 @@ import { type SetStateAction, type FormEvent, type Dispatch, type FunctionCompon
 import { type IData } from "@/interfaces";
 
 interface FormProps {
-    setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>
+    setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>,
+    inputIsCamera: boolean,
+    setInputIsCamera: Dispatch<SetStateAction<boolean>>
 }
 
-const Form: FunctionComponent<FormProps> = ({ setOutput }) => {
+const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInputIsCamera }) => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
@@ -46,6 +48,10 @@ const Form: FunctionComponent<FormProps> = ({ setOutput }) => {
 
     };
 
+    const handleInputType = () => {
+            setInputIsCamera(!inputIsCamera)
+    }
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -61,9 +67,16 @@ const Form: FunctionComponent<FormProps> = ({ setOutput }) => {
 
             <button
                 type="submit"
-                className="w-full bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
             >
-                Escanear
+                Enviar Link
+            </button>
+            <button
+                type="button"
+                onClick={handleInputType}
+                className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
+            >
+                Usar cámara
             </button>
         </form>
     );

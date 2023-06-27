@@ -4,10 +4,13 @@ import { type SetStateAction, type Dispatch } from "react";
 import { type IData } from '@/interfaces';
 
 interface CameraScannerProps {
-    setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>
+    setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>,
+    inputIsCamera: boolean,
+    setInputIsCamera: Dispatch<SetStateAction<boolean>>
 }
 
-const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => {
+const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, inputIsCamera, setInputIsCamera }) => {
+    const [cameraIsOpen, setCameraIsOpen] = useState<boolean>(false)
 
     const handleCamera = () => {
         setCameraIsOpen(!cameraIsOpen)
@@ -47,7 +50,9 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => 
         }
     }
 
-    const [cameraIsOpen, setCameraIsOpen] = useState<boolean>(false)
+    const handleInputType = () => {
+        setInputIsCamera(!inputIsCamera)
+    }
 
     return (
         <>
@@ -72,6 +77,14 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => 
                     }}
                 />
             )}
+
+            <button
+                type="button"
+                onClick={handleInputType}
+                className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
+            >
+                Introducir Link
+            </button>
         </>
     )
 }
