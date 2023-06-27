@@ -16,19 +16,34 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => 
 
     const handleScan = async (url: string) => {
 
-        const response = await fetch('https://ticketscanner-production.up.railway.app/api/v1/tickets/disco', {
-            method: 'POST',
-            body: JSON.stringify({ url }),
+        const response = await fetch((url as string), {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'mode': 'no-cors'
+                'Content-Type': 'text/html',
             },
         });
 
         if (response.ok) {
-            const data = await response.json();
-            setOutput(data)
-            setCameraIsOpen(false)
+            const data = await response.text()
+
+            const ticketParser = await fetch('https://ticketscanner.onrender.com/api/v1/tickets/disco', {
+                method: 'POST',
+                body: JSON.stringify({ ticketData: data }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (ticketParser.ok) {
+                const data = await ticketParser.json()
+                setOutput(data)
+                setCameraIsOpen(false)
+            } else {
+                console.error(ticketParser.status)
+            }
+
+        } else {
+            console.error('Form submission failed:', response.status);
         }
     }
 
@@ -48,7 +63,7 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => 
 
             {cameraIsOpen && (
                 <QrReader
-                    constraints={{ facingMode: 'enviroment' }}
+                    constraints={{ facingMode: 'environment' }}
                     onResult={(result) => {
                         if (!!result) {
                             // @ts-ignore
