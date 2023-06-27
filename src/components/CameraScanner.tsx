@@ -1,7 +1,13 @@
 import { QrReader } from 'react-qr-reader';
-import { useState } from 'react';
+import { type FunctionComponent, useState } from 'react';
+import { type SetStateAction, type Dispatch } from "react";
+import { type IData } from '@/interfaces';
 
-function CameraScanner() {
+interface CameraScannerProps {
+    setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>
+}
+
+const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput }) => {
 
     const handleCamera = () => {
         setCameraIsOpen(!cameraIsOpen)

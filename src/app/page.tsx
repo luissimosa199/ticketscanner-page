@@ -18,7 +18,7 @@ export default function Home() {
       <div className="w-full mx-4 md:w-2/3 md:mx-auto p-6 bg-white rounded shadow">
         <h1 className="text-3xl font-bold mb-6">Ticket Scanner</h1>
 
-        <CameraScanner />
+        <CameraScanner setOutput={setOutput} />
         <Form setOutput={setOutput} />
 
       </div>
