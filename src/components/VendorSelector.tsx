@@ -14,18 +14,18 @@ const VendorSelector: FunctionComponent<VendorSelectorProps> = ({ selectedVendor
     return (
         <div>
             <h2 className="text-lg mb-2">Selecciona el supermercado</h2>
-            <div className="flex justify-between mb-4">
-                <label htmlFor="disco" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'disco' && "border-blue-500 "} transition-all`}>Disco</label>
+            <div className="flex justify-between mb-4 flex-col gap-2 text-center md:flex-row">
+                <label htmlFor="disco" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'disco' && "border-blue-500 "} hover:bg-slate-200 transition-all`}>Disco</label>
                 <input type="radio" name="vendor" id="disco" value="disco" onChange={handleVendorChange} hidden />
 
-                <label htmlFor="coto" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'coto' && "border-blue-500"} transition-all`}>Coto</label>
-                <input type="radio" name="vendor" id="coto" value="coto" onChange={handleVendorChange} hidden />
+                <label htmlFor="coto" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'coto' && "border-blue-500"} hover:bg-slate-200 transition-all`}>Coto</label>
+                <input type="radio" name="vendor" id="coto" value="coto" onChange={handleVendorChange} hidden disabled />
 
-                <label htmlFor="jumbo" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'jumbo' && "border-blue-500"} transition-all`}>Jumbo</label>
-                <input type="radio" name="vendor" id="jumbo" value="jumbo" onChange={handleVendorChange} hidden />
+                <label htmlFor="jumbo" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'jumbo' && "border-blue-500"} hover:bg-slate-200 transition-all`}>Jumbo</label>
+                <input type="radio" name="vendor" id="jumbo" value="jumbo" onChange={handleVendorChange} hidden disabled />
 
-                <label htmlFor="dia" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'dia' && "border-blue-500"} transition-all`}>Día</label>
-                <input type="radio" name="vendor" id="dia" value="dia" onChange={handleVendorChange} hidden />
+                <label htmlFor="dia" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'dia' && "border-blue-500"} hover:bg-slate-200 transition-all`}>Día</label>
+                <input type="radio" name="vendor" id="dia" value="dia" onChange={handleVendorChange} hidden disabled />
             </div>
         </div>
     )

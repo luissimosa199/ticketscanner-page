@@ -59,7 +59,7 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, input
 
             <div className="flex justify-center mb-6">
                 <button
-                    className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
+                    className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 bg-blue-500 rounded-md text-white hover:bg-white hover:text-blue-500 focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
                     onClick={handleCamera}
                 >
                     {cameraIsOpen ? "Cerrar Cámara" : "Abrir Cámara"}
@@ -67,21 +67,23 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, input
             </div>
 
             {cameraIsOpen && (
-                <QrReader
-                    constraints={{ facingMode: 'environment' }}
-                    onResult={(result) => {
-                        if (!!result) {
-                            // @ts-ignore
-                            handleScan(result?.text);
-                        }
-                    }}
-                />
+                <div className="my-2">
+                    <QrReader
+                        constraints={{ facingMode: 'environment' }}
+                        onResult={(result) => {
+                            if (!!result) {
+                                // @ts-ignore
+                                handleScan(result?.text);
+                            }
+                        }}
+                    />
+                </div>
             )}
 
             <button
                 type="button"
                 onClick={handleInputType}
-                className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
+                className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 bg-blue-500 rounded-md text-white hover:bg-white hover:text-blue-500 focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
             >
                 Introducir Link
             </button>
