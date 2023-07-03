@@ -1,6 +1,8 @@
 'use client';
 
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
+
+import CircularProgress from '@mui/material/CircularProgress';
 
 import CameraScanner from "@/components/CameraScanner";
 import Form from "@/components/Form";
@@ -14,6 +16,7 @@ export default function Home() {
   const [output, setOutput] = useState<{ status: string, data: IData } | null>(null)
   const [selectedVendor, setSelectedVendor] = useState<string | null>(null)
   const [inputIsCamera, setInputIsCamera] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
   return (
@@ -30,13 +33,15 @@ export default function Home() {
           </h2>
           {inputIsCamera
             ?
-            <CameraScanner inputIsCamera={inputIsCamera} setInputIsCamera={setInputIsCamera} setOutput={setOutput} />
+            <CameraScanner inputIsCamera={inputIsCamera} setInputIsCamera={setInputIsCamera} setOutput={setOutput} setIsLoading={setIsLoading} />
             :
-            <Form inputIsCamera={inputIsCamera} setInputIsCamera={setInputIsCamera} setOutput={setOutput} />
+            <Form inputIsCamera={inputIsCamera} setInputIsCamera={setInputIsCamera} setOutput={setOutput} setIsLoading={setIsLoading} />
           }
         </div>}
 
       </div>
+
+      { isLoading && <div className="mt-12"> <CircularProgress/> </div> }
 
       <Output output={output} />
 

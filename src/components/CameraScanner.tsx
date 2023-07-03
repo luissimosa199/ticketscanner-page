@@ -6,10 +6,11 @@ import { type IData } from '@/interfaces';
 interface CameraScannerProps {
     setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>,
     inputIsCamera: boolean,
-    setInputIsCamera: Dispatch<SetStateAction<boolean>>
+    setInputIsCamera: Dispatch<SetStateAction<boolean>>,
+    setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, inputIsCamera, setInputIsCamera }) => {
+const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, inputIsCamera, setInputIsCamera, setIsLoading }) => {
     const [cameraIsOpen, setCameraIsOpen] = useState<boolean>(false)
 
     const handleCamera = () => {
@@ -18,6 +19,9 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, input
     }
 
     const handleScan = async (url: string) => {
+
+        setIsLoading(true)
+        setCameraIsOpen(false)
 
         const response = await fetch((url as string), {
             method: 'GET',
@@ -39,8 +43,8 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, input
 
             if (ticketParser.ok) {
                 const data = await ticketParser.json()
+                setIsLoading(false)
                 setOutput(data)
-                setCameraIsOpen(false)
             } else {
                 console.error(ticketParser.status)
             }
@@ -59,7 +63,7 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, input
 
             <div className="flex justify-center mb-6">
                 <button
-                    className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 bg-blue-500 rounded-md text-white hover:bg-white hover:text-blue-500 focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
+                    className="flex items-center justify-center w-full md:w-1/2 px-4 py-2 border border-blue-500 bg-blue-500 rounded-md text-white hover:bg-white hover:text-blue-500 focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
                     onClick={handleCamera}
                 >
                     {cameraIsOpen ? "Cerrar Cámara" : "Abrir Cámara"}
@@ -83,7 +87,7 @@ const CameraScanner: FunctionComponent<CameraScannerProps> = ({ setOutput, input
             <button
                 type="button"
                 onClick={handleInputType}
-                className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-blue-500 bg-blue-500 rounded-md text-white hover:bg-white hover:text-blue-500 focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
+                className="flex items-center justify-center w-full md:mx-auto md:w-1/2 px-4 py-2 border border-blue-500 bg-blue-500 rounded-md text-white hover:bg-white hover:text-blue-500 focus:outline-none focus:bg-blue-500 focus:text-white transition-all"
             >
                 Introducir Link
             </button>

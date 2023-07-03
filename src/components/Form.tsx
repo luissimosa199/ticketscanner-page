@@ -5,9 +5,10 @@ interface FormProps {
     setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>,
     inputIsCamera: boolean,
     setInputIsCamera: Dispatch<SetStateAction<boolean>>
+    setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInputIsCamera }) => {
+const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInputIsCamera, setIsLoading }) => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
@@ -15,6 +16,8 @@ const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInput
         const formData = new FormData(event.currentTarget);
 
         const { url } = Object.fromEntries(formData)
+
+        setIsLoading(true)
 
         const response = await fetch((url as string), {
             method: 'GET',
@@ -36,12 +39,15 @@ const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInput
 
             if (ticketParser.ok) {
                 const data = await ticketParser.json()
+                setIsLoading(false)
                 setOutput(data)
             } else {
+                setIsLoading(false)
                 console.error(ticketParser.status)
             }
 
         } else {
+            setIsLoading(false)
             console.error('Form submission failed:', response.status);
         }
 

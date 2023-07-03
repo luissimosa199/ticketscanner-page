@@ -9,4 +9,6 @@ export interface IData {
     logoLink: string;
     totalAmount: number;
     ticketItems: ITicketItem[];
+    address: string; 
+    date: string;
 }

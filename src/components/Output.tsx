@@ -36,6 +36,9 @@ const Output: FunctionComponent<OutputProps> = ({ output }) => {
                     <div className=" ">
                         <p className="text-gray-700 text-base mb-2">Precio total: ${output?.data.totalAmount}</p>
                         <p className="text-gray-700 text-base mb-2">Cantidad de artículos: {output?.data.ticketItems.length}</p>
+                        <p className="text-gray-700 text-base mb-2">Fecha: {output?.data.date }</p>
+                        <p className="text-gray-700 text-base mb-2">Direccion: {output?.data.address }</p>
+                        
                     </div>
                 </div>}
 
