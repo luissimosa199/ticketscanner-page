@@ -19,7 +19,7 @@ const VendorSelector: FunctionComponent<VendorSelectorProps> = ({ selectedVendor
                 <input type="radio" name="vendor" id="disco" value="disco" onChange={handleVendorChange} hidden />
 
                 <label htmlFor="coto" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'coto' && "border-blue-500"} hover:bg-slate-200 transition-all`}>Coto</label>
-                <input type="radio" name="vendor" id="coto" value="coto" onChange={handleVendorChange} hidden disabled />
+                <input type="radio" name="vendor" id="coto" value="coto" onChange={handleVendorChange} hidden />
 
                 <label htmlFor="jumbo" className={`border py-4 px-8 cursor-pointer ${selectedVendor === 'jumbo' && "border-blue-500"} hover:bg-slate-200 transition-all`}>Jumbo</label>
                 <input type="radio" name="vendor" id="jumbo" value="jumbo" onChange={handleVendorChange} hidden disabled />
