@@ -1,24 +1,22 @@
 import { type SetStateAction, type FormEvent, type Dispatch, type FunctionComponent } from "react";
 import { type IData } from "@/interfaces";
+import { parseDiscoTicket } from "@/helpers/domscanner";
 
 interface FormProps {
     setOutput: Dispatch<SetStateAction<{ status: string, data: IData } | null>>,
     inputIsCamera: boolean,
     setInputIsCamera: Dispatch<SetStateAction<boolean>>
     setIsLoading: Dispatch<SetStateAction<boolean>>
+    selectedVendor: string
 }
 
-const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInputIsCamera, setIsLoading }) => {
+const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInputIsCamera, setIsLoading, selectedVendor }) => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
-
         const formData = new FormData(event.currentTarget);
-
         const { url } = Object.fromEntries(formData)
-
         setIsLoading(true)
-
         const response = await fetch((url as string), {
             method: 'GET',
             headers: {
@@ -29,33 +27,33 @@ const Form: FunctionComponent<FormProps> = ({ setOutput, inputIsCamera, setInput
         if (response.ok) {
             const data = await response.text()
 
-            const ticketParser = await fetch('https://ticketscanner.onrender.com/api/v1/tickets/disco', {
-                method: 'POST',
-                body: JSON.stringify({ ticketData: data }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            switch (selectedVendor) {
+                case "disco":
+                    setOutput({ status: 'OK', data: parseDiscoTicket(data) })
+                    break;
 
-            if (ticketParser.ok) {
-                const data = await ticketParser.json()
-                setIsLoading(false)
-                setOutput(data)
-            } else {
-                setIsLoading(false)
-                console.error(ticketParser.status)
+                case "coto":
+                    console.log(data, "Coto not implemented")
+                    // setOutput({ status: 'OK', data: parseDiscoTicket(data) })
+                    break;
+
+                    // add more cases
+
+                default:
+                    // setOutput({ status: 'ERROR', data: parseDiscoTicket(data) })
+                    break;
             }
 
+
+            setIsLoading(false)
         } else {
             setIsLoading(false)
             console.error('Form submission failed:', response.status);
         }
-
-
     };
 
     const handleInputType = () => {
-            setInputIsCamera(!inputIsCamera)
+        setInputIsCamera(!inputIsCamera)
     }
 
     return (

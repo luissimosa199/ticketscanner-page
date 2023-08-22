@@ -1,13 +1,10 @@
 'use client';
 
 import { useState } from "react";
-
 import CircularProgress from '@mui/material/CircularProgress';
-
 import CameraScanner from "@/components/CameraScanner";
 import Form from "@/components/Form";
 import Output from "@/components/Output";
-
 import { type IData } from "@/interfaces";
 import VendorSelector from "@/components/VendorSelector";
 
@@ -27,21 +24,32 @@ export default function Home() {
 
         <VendorSelector setSelectedVendor={setSelectedVendor} selectedVendor={selectedVendor} />
 
-        {selectedVendor && <div >
+        {selectedVendor && <div>
           <h2 className="text-lg mb-4">
             Usa la cámara o introduce el link de tu ticket
           </h2>
           {inputIsCamera
             ?
-            <CameraScanner inputIsCamera={inputIsCamera} setInputIsCamera={setInputIsCamera} setOutput={setOutput} setIsLoading={setIsLoading} />
+            <CameraScanner
+              inputIsCamera={inputIsCamera}
+              setInputIsCamera={setInputIsCamera}
+              setOutput={setOutput}
+              setIsLoading={setIsLoading}
+            />
             :
-            <Form inputIsCamera={inputIsCamera} setInputIsCamera={setInputIsCamera} setOutput={setOutput} setIsLoading={setIsLoading} />
+            <Form
+              inputIsCamera={inputIsCamera}
+              setInputIsCamera={setInputIsCamera}
+              setOutput={setOutput}
+              setIsLoading={setIsLoading}
+              selectedVendor={selectedVendor}
+            />
           }
         </div>}
 
       </div>
 
-      { isLoading && <div className="mt-12"> <CircularProgress/> </div> }
+      {isLoading && <div className="mt-12"> <CircularProgress /> </div>}
 
       <Output output={output} />
 
